@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Expert System - Diagnosa Penyakit Dalam</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Sistem Pakar Diagnosa Penyakit</h1>
+        <p>Mata Kuliah: Artificial Intelligence</p>
+    </header>
+
+    <section class="instruction">
+        <p>Pilih gejala yang Anda rasakan untuk mendiagnosa kemungkinan penyakit (Asam Urat, Kolesterol, Gula Darah, atau Hipertensi).</p>
+    </section>
+
+    <div class="grid-container">
+        <div class="disease-card">
+            <h3>Gejala Asam Urat</h3>
+            <label><input type="checkbox" class="gejala" value="G01"> Nyeri sendi hebat</label>
+            <label><input type="checkbox" class="gejala" value="G02"> Jempol kaki bengkak/merah</label>
+            <label><input type="checkbox" class="gejala" value="G03"> Sendi terasa panas</label>
+            <label><input type="checkbox" class="gejala" value="G04"> Nyeri hebat di pagi hari</label>
+        </div>
+
+        <div class="disease-card">
+            <h3>Gejala Kolesterol</h3>
+            <label><input type="checkbox" class="gejala" value="G05"> Tengkuk terasa kaku/pegal</label>
+            <label><input type="checkbox" class="gejala" value="G06"> Sering kesemutan kaki/tangan</label>
+            <label><input type="checkbox" class="gejala" value="G07"> Mudah lelah & lemas</label>
+            <label><input type="checkbox" class="gejala" value="G08"> Benjolan lemak di kelopak mata</label>
+        </div>
+
+        <div class="disease-card">
+            <h3>Gejala Gula Darah</h3>
+            <label><input type="checkbox" class="gejala" value="G09"> Sering merasa sangat haus</label>
+            <label><input type="checkbox" class="gejala" value="G10"> Sering buang air kecil</label>
+            <label><input type="checkbox" class="gejala" value="G11"> Luka yang sangat sulit sembuh</label>
+            <label><input type="checkbox" class="gejala" value="G12"> Pandangan kabur mendadak</label>
+        </div>
+
+        <div class="disease-card">
+            <h3>Gejala Hipertensi</h3>
+            <label><input type="checkbox" class="gejala" value="G13"> Sakit kepala bagian belakang</label>
+            <label><input type="checkbox" class="gejala" value="G14"> Jantung berdebar-debar</label>
+            <label><input type="checkbox" class="gejala" value="G15"> Telinga sering berdenging</label>
+            <label><input type="checkbox" class="gejala" value="G16"> Sesak napas saat aktivitas</label>
+        </div>
+    </div>
+
+    <button id="btn-diagnosa" onclick="prosesAI()">Jalankan Forward Chaining</button>
+
+    <div id="result-box" class="result-hidden">
+        <h2 id="result-title">Hasil Diagnosa</h2>
+        <p id="result-text"></p>
+    </div>
+</div>
+
+<script>
+    function prosesAI() {
+        const selected = document.querySelectorAll('.gejala:checked');
+        const fakta = Array.from(selected).map(cb => cb.value);
+        const resultBox = document.getElementById('result-box');
+        const resultText = document.getElementById('result-text');
+        
+        let diagnosa = "";
+        
+        // Logika Forward Chaining (Data-Driven)
+        if (fakta.includes("G01") && fakta.includes("G02") && fakta.includes("G03") && fakta.includes("G04")) {
+            diagnosa = "Berdasarkan gejala, Anda terindikasi menderita ASAM URAT.";
+        } else if (fakta.includes("G05") && fakta.includes("G06") && fakta.includes("G07") && fakta.includes("G08")) {
+            diagnosa = "Berdasarkan gejala, Anda terindikasi menderita KOLESTEROL TINGGI.";
+        } else if (fakta.includes("G09") && fakta.includes("G10") && fakta.includes("G11") && fakta.includes("G12")) {
+            diagnosa = "Berdasarkan gejala, Anda terindikasi menderita GULA DARAH (Diabetes).";
+        } else if (fakta.includes("G13") && fakta.includes("G14") && fakta.includes("G15") && fakta.includes("G16")) {
+            diagnosa = "Berdasarkan gejala, Anda terindikasi menderita HIPERTENSI.";
+        } else if (fakta.length === 0) {
+            diagnosa = "Mohon pilih gejala terlebih dahulu.";
+        } else {
+            diagnosa = "Gejala tidak cukup spesifik untuk menentukan satu penyakit pasti. Disarankan melakukan cek laboratorium.";
+        }
+
+        resultText.innerText = diagnosa;
+        resultBox.className = "result-visible";
+    }
+</script>
+
+</body>
+</html>
